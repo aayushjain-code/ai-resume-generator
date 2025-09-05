@@ -31,7 +31,7 @@ Return the resume content in clean, structured text format that can be easily co
 
 import { ResumeData } from "@/types";
 
-export const generateResume = async (resumeData: ResumeData) => {
+export const generateResume = async (resumeData: ResumeData): Promise<ArrayBuffer> => {
   try {
     // Get the Gemini Pro model
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
@@ -85,21 +85,23 @@ Please generate a professional resume following the structure and guidelines abo
     } catch (apiError: unknown) {
       // Check if it's a quota error and handle it immediately
       if (
-        apiError.message.includes("429") ||
-        apiError.message.includes("quota") ||
-        apiError.message.includes("QuotaFailure")
+        apiError instanceof Error && (
+          apiError.message.includes("429") ||
+          apiError.message.includes("quota") ||
+          apiError.message.includes("QuotaFailure")
+        )
       ) {
         console.log("API quota exceeded, generating fallback resume...");
         const fallbackContent = generateFallbackResume(resumeData);
 
-        // Generate the appropriate format with fallback content
-        switch (resumeData.exportFormat) {
-          case "html":
-            return generateHtml(fallbackContent, resumeData);
-          case "docx":
-          default:
-            return await generateDocx(fallbackContent, resumeData);
-        }
+              // Generate the appropriate format with fallback content
+      switch (resumeData.exportFormat) {
+        case "html":
+          return new TextEncoder().encode(generateHtml(fallbackContent, resumeData)).buffer;
+        case "docx":
+        default:
+          return await generateDocx(fallbackContent, resumeData);
+      }
       }
       // Re-throw other API errors
       throw apiError;
@@ -110,7 +112,7 @@ Please generate a professional resume following the structure and guidelines abo
     // Generate the appropriate format
     switch (resumeData.exportFormat) {
       case "html":
-        return generateHtml(resumeContent, resumeData);
+        return new TextEncoder().encode(generateHtml(resumeContent, resumeData)).buffer;
       case "docx":
       default:
         return await generateDocx(resumeContent, resumeData);
@@ -120,9 +122,11 @@ Please generate a professional resume following the structure and guidelines abo
 
     // Check if it's a quota error
     if (
-      error.message.includes("429") ||
-      error.message.includes("quota") ||
-      error.message.includes("QuotaFailure")
+      error instanceof Error && (
+        error.message.includes("429") ||
+        error.message.includes("quota") ||
+        error.message.includes("QuotaFailure")
+      )
     ) {
       console.log("API quota exceeded, generating fallback resume...");
       const fallbackContent = generateFallbackResume(resumeData);
@@ -130,7 +134,7 @@ Please generate a professional resume following the structure and guidelines abo
       // Generate the appropriate format with fallback content
       switch (resumeData.exportFormat) {
         case "html":
-          return generateHtml(fallbackContent, resumeData);
+          return new TextEncoder().encode(generateHtml(fallbackContent, resumeData)).buffer;
         case "docx":
         default:
           return await generateDocx(fallbackContent, resumeData);
@@ -139,15 +143,17 @@ Please generate a professional resume following the structure and guidelines abo
 
     // Check if it's an API key error
     if (
-      error.message.includes("API_KEY") ||
-      error.message.includes("authentication")
+      error instanceof Error && (
+        error.message.includes("API_KEY") ||
+        error.message.includes("authentication")
+      )
     ) {
       throw new Error(
         "Invalid API key. Please check your Gemini API key configuration."
       );
     }
 
-    throw new Error(`Failed to generate resume: ${error.message}`);
+    throw new Error(`Failed to generate resume: ${error instanceof Error ? error.message : 'Unknown error'}`);
   }
 };
 

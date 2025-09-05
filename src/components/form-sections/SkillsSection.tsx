@@ -2,7 +2,7 @@ import React from "react";
 import { Wrench } from "lucide-react";
 import { FormSectionProps } from "@/types";
 
-interface SkillsSectionProps extends FormSectionProps {}
+type SkillsSectionProps = FormSectionProps;
 
 const SkillsSection = ({ register, errors }: SkillsSectionProps) => {
   return (

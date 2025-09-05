@@ -2,7 +2,7 @@ import React from "react";
 import { FileText } from "lucide-react";
 import { FormSectionProps } from "@/types";
 
-interface DescriptionSectionProps extends FormSectionProps {}
+type DescriptionSectionProps = FormSectionProps;
 
 const DescriptionSection = ({ register, errors }: DescriptionSectionProps) => {
   return (
@@ -16,7 +16,7 @@ const DescriptionSection = ({ register, errors }: DescriptionSectionProps) => {
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          Describe the job or role you're applying for
+          Describe the job or role you&apos;re applying for
         </label>
         <textarea
           {...register("description", {

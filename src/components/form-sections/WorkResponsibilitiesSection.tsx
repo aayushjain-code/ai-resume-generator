@@ -2,7 +2,7 @@ import React from "react";
 import { Briefcase } from "lucide-react";
 import { FormSectionProps } from "@/types";
 
-interface WorkResponsibilitiesSectionProps extends FormSectionProps {}
+type WorkResponsibilitiesSectionProps = FormSectionProps;
 
 const WorkResponsibilitiesSection = ({
   register,

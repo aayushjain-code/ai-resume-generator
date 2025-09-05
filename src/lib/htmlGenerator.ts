@@ -1,6 +1,6 @@
 import { ResumeData } from "@/types";
 
-export const generateHtml = (resumeContent: string, resumeData: ResumeData) => {
+export const generateHtml = (resumeContent: string, resumeData: ResumeData): string => {
   try {
     // Parse the resume content into structured sections
     const sections = parseResumeContent(resumeContent);

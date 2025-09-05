@@ -1,3 +1,5 @@
+import { UseFormRegister, FieldErrors } from "react-hook-form";
+
 export interface FormData {
   personalInfo: {
     name: string;
@@ -14,8 +16,8 @@ export interface FormData {
 }
 
 export interface FormSectionProps {
-  register: any;
-  errors: any;
+  register: UseFormRegister<FormData>;
+  errors: FieldErrors<FormData>;
 }
 
 export interface ResumeData extends FormData {

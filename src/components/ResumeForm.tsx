@@ -48,7 +48,7 @@ const ResumeForm = ({
       const result = await generateResume(resumeData);
 
       // Create download URL
-      const blob = new Blob([result], {
+      const blob = new Blob([result as ArrayBuffer], {
         type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       });
       const url = window.URL.createObjectURL(blob);
@@ -98,7 +98,8 @@ const ResumeForm = ({
       };
 
       const result = await generateResume(resumeData);
-      setPreviewHtml(result);
+      const htmlContent = new TextDecoder().decode(result);
+      setPreviewHtml(htmlContent);
       setShowPreview(true);
       toast.success("Preview generated successfully!");
     } catch (error: unknown) {

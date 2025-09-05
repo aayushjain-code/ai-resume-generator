@@ -2,7 +2,7 @@ import React from "react";
 import { StickyNote } from "lucide-react";
 import { FormSectionProps } from "@/types";
 
-interface AdditionalNotesSectionProps extends FormSectionProps {}
+type AdditionalNotesSectionProps = FormSectionProps;
 
 const AdditionalNotesSection = ({
   register,

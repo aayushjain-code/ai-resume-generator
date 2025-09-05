@@ -1,14 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { Toaster } from "react-hot-toast";
 import ResumeForm from "@/components/ResumeForm";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 export default function Home() {
-  const [isGenerating, setIsGenerating] = useState(false);
-
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -22,7 +20,7 @@ export default function Home() {
               Create professional, ATS-friendly resumes powered by AI
             </p>
           </div>
-          <ResumeForm onGeneratingChange={setIsGenerating} />
+          <ResumeForm onGeneratingChange={() => {}} />
         </div>
       </main>
       <Footer />
