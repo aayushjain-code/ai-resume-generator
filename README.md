@@ -1,177 +1,190 @@
-# AI Resume Generator - Next.js Version
+# AI Resume Generator
 
-A modern, full-stack resume generator built with Next.js that creates professional, ATS-friendly resumes using Google's Gemini AI.
+A powerful, AI-driven resume generator built with Next.js 15, TypeScript, and Tailwind CSS. Generate professional, ATS-friendly resumes using Google's Gemini AI or fallback templates.
+
+![Next.js](https://img.shields.io/badge/Next.js-15.5.2-black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4.0-38B2AC)
+![React](https://img.shields.io/badge/React-19.1.0-61DAFB)
 
 ## ✨ Features
 
-- **Frontend-Only**: Everything runs in the browser - no backend server needed
-- **AI-Powered**: Uses Google Gemini 1.5 Pro for intelligent resume generation
-- **Smart Fallback**: Generates professional sample resumes when API quota is exceeded
-- **Multiple Formats**: Generate DOCX files and HTML previews
-- **Responsive Design**: Clean, modern UI that works on all devices
-- **Real-time Preview**: See your resume before downloading
-- **ATS-Friendly**: Optimized for Applicant Tracking Systems
+### 🎯 **Structured Resume Generation**
+- **Candidate Details**: Name, job title, experience level, domain, education
+- **Work Responsibilities**: 4-6 key responsibilities with action verbs
+- **Skills & Qualifications**: Technical skills, tools, frameworks, certifications
+- **Professional Formatting**: ATS-friendly structure with clear sections
+
+### 🤖 **AI-Powered Content**
+- **Google Gemini AI Integration**: Generate personalized resume content
+- **Smart Fallback System**: Professional templates when API quota is exceeded
+- **Job Code Generation**: Unique tracking codes in format `[ROLE-INITIALS-NAME-YYYY]`
+- **Context-Aware**: Extracts relevant technologies from job descriptions
+
+### 📄 **Multiple Export Formats**
+- **DOCX Generation**: Professional Word documents with proper formatting
+- **HTML Preview**: Live preview before downloading
+- **PDF Ready**: Optimized for PDF conversion
+
+### 🎨 **Modern UI/UX**
+- **Responsive Design**: Works on desktop, tablet, and mobile
+- **Form Validation**: Real-time validation with helpful error messages
+- **Loading States**: Smooth user experience with progress indicators
+- **Toast Notifications**: Clear feedback for all actions
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-
-- Node.js 18+
+- Node.js 18+ 
 - npm or yarn
-- Google Gemini API key
+- Google Gemini API key (optional, fallback available)
 
 ### Installation
 
-1. **Clone and navigate to the project:**
-
+1. **Clone the repository**
    ```bash
-   cd resume-generator-nextjs
+   git clone https://github.com/aayushjain-code/ai-resume-generator.git
+   cd ai-resume-generator
    ```
 
-2. **Install dependencies:**
-
+2. **Install dependencies**
    ```bash
    npm install
    ```
 
-3. **Set up environment variables:**
-
+3. **Set up environment variables**
    ```bash
-   echo "NEXT_PUBLIC_GEMINI_API_KEY=your_gemini_api_key_here" > .env.local
+   cp .env.example .env.local
+   ```
+   
+   Add your Gemini API key to `.env.local`:
+   ```env
+   NEXT_PUBLIC_GEMINI_API_KEY=your_gemini_api_key_here
    ```
 
-4. **Start the development server:**
-
+4. **Run the development server**
    ```bash
    npm run dev
    ```
 
-5. **Open your browser:**
+5. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
 
-## 📝 How to Use
+## 📋 Usage
 
-1. **Fill out the form:**
+### 1. Fill Out the Form
+- **Candidate Details**: Enter your name, job title, experience level, domain, and education
+- **Job Description**: Provide detailed information about the role you're applying for
+- **Work Responsibilities**: List 4-6 key responsibilities with action verbs
+- **Skills & Qualifications**: Include technical skills, tools, frameworks, and certifications
+- **Additional Notes**: Add any specific requirements or additional information
 
-   - **Job Description** (required): Describe the role you're applying for
-   - **Additional Notes** (optional): Any extra information or requirements
-   - **Personal Info** (optional): Your name and email
+### 2. Generate Resume
+- **Preview**: Click "Preview Resume" to see HTML version
+- **Download**: Click "Generate DOCX" to download Word document
+- **Job Code**: Each resume includes a unique tracking code
 
-2. **Preview your resume:**
-
-   - Click "Preview Resume" to see the generated resume
-   - Review the content and formatting
-
-3. **Download your resume:**
-   - Click "Generate DOCX" to download a Word document
-   - The file will be automatically downloaded to your device
+### 3. Customize Output
+- The AI generates content based on your inputs and job description
+- Fallback templates ensure you always get a professional resume
+- All resumes are ATS-optimized for maximum compatibility
 
 ## 🛠️ Technology Stack
 
-- **Frontend**: Next.js 14, React 18, TypeScript
-- **Styling**: Tailwind CSS
-- **AI Integration**: Google Gemini 1.5 Pro
-- **Document Generation**: docx.js
-- **Form Handling**: react-hook-form
-- **Notifications**: react-hot-toast
-- **Icons**: Lucide React
+### Frontend
+- **Next.js 15.5.2** - React framework with App Router
+- **TypeScript 5.0** - Type-safe development
+- **Tailwind CSS 3.4.0** - Utility-first styling
+- **React Hook Form** - Form management and validation
+- **Lucide React** - Beautiful icons
 
-## 🔧 Configuration
+### Backend & AI
+- **Google Generative AI** - Gemini 1.5 Pro for content generation
+- **DOCX Generation** - Professional Word document creation
+- **Puppeteer** - PDF generation capabilities
 
-### Environment Variables
-
-Create a `.env.local` file in the root directory:
-
-```env
-NEXT_PUBLIC_GEMINI_API_KEY=your_gemini_api_key_here
-```
-
-### Getting a Gemini API Key
-
-1. Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
-2. Sign in with your Google account
-3. Create a new API key
-4. Copy the key to your `.env.local` file
+### Development Tools
+- **ESLint** - Code linting and formatting
+- **PostCSS** - CSS processing
+- **Turbopack** - Fast development builds
 
 ## 📁 Project Structure
 
 ```
-resume-generator-nextjs/
-├── src/
-│   ├── app/
-│   │   ├── globals.css
-│   │   ├── layout.tsx
-│   │   └── page.tsx
-│   ├── components/
-│   │   ├── form-sections/
-│   │   │   ├── PersonalInfo.tsx
-│   │   │   ├── DescriptionSection.tsx
-│   │   │   └── AdditionalNotesSection.tsx
-│   │   ├── Header.tsx
-│   │   ├── Footer.tsx
-│   │   └── ResumeForm.tsx
-│   └── lib/
-│       ├── resumeGenerator.ts
-│       ├── docxGenerator.ts
-│       └── htmlGenerator.ts
-├── public/
-├── tailwind.config.js
-├── next.config.ts
-└── package.json
+src/
+├── app/
+│   ├── globals.css          # Global styles and Tailwind imports
+│   ├── layout.tsx           # Root layout component
+│   └── page.tsx             # Home page
+├── components/
+│   ├── form-sections/       # Form section components
+│   │   ├── PersonalInfo.tsx
+│   │   ├── DescriptionSection.tsx
+│   │   ├── WorkResponsibilitiesSection.tsx
+│   │   ├── SkillsSection.tsx
+│   │   └── AdditionalNotesSection.tsx
+│   ├── ResumeForm.tsx       # Main form component
+│   ├── Header.tsx           # Header component
+│   └── Footer.tsx           # Footer component
+└── lib/
+    ├── resumeGenerator.ts   # AI integration and resume generation
+    ├── docxGenerator.ts     # DOCX document generation
+    └── htmlGenerator.ts     # HTML preview generation
 ```
+
+## 🔧 Configuration
+
+### Environment Variables
+```env
+NEXT_PUBLIC_GEMINI_API_KEY=your_gemini_api_key_here
+```
+
+### Tailwind Configuration
+Custom color palette and component classes defined in `tailwind.config.js`:
+- Primary colors (blue palette)
+- Custom component classes (buttons, inputs, form sections)
+- Responsive design utilities
 
 ## 🚀 Deployment
 
 ### Vercel (Recommended)
-
 1. Push your code to GitHub
 2. Connect your repository to Vercel
-3. Add your `NEXT_PUBLIC_GEMINI_API_KEY` environment variable
-4. Deploy!
-
-### Netlify
-
-1. Build the project: `npm run build`
-2. Deploy the `out` folder to Netlify
-3. Add environment variables in Netlify dashboard
+3. Add environment variables in Vercel dashboard
+4. Deploy automatically
 
 ### Other Platforms
-
-This is a standard Next.js application and can be deployed to any platform that supports Node.js:
-
-- Railway
-- Render
-- DigitalOcean App Platform
-- AWS Amplify
-
-## 🔒 Security Notes
-
-- API keys are prefixed with `NEXT_PUBLIC_` to work in the browser
-- This is safe for client-side use with Gemini API
-- Consider implementing rate limiting for production use
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-1. **API Quota Exceeded**: The app includes a fallback system that generates sample resumes when the API limit is reached
-2. **Build Errors**: Make sure all dependencies are installed with `npm install`
-3. **Styling Issues**: Ensure Tailwind CSS is properly configured
-
-### Getting Help
-
-- Check the browser console for error messages
-- Verify your API key is correct
-- Ensure all environment variables are set
-
-## 📄 License
-
-This project is open source and available under the MIT License.
+- **Netlify**: Compatible with Next.js static export
+- **Railway**: Full-stack deployment with environment variables
+- **AWS/GCP**: Container-based deployment
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- **Google Gemini AI** for powerful content generation
+- **Next.js Team** for the amazing React framework
+- **Tailwind CSS** for the utility-first CSS framework
+- **Vercel** for seamless deployment platform
+
+## 📞 Support
+
+If you have any questions or need help:
+
+1. Check the [Issues](https://github.com/aayushjain-code/ai-resume-generator/issues) page
+2. Create a new issue with detailed description
+3. Contact: [aayushjain-code](https://github.com/aayushjain-code)
 
 ---
 
-**Built with ❤️ using Next.js and Google Gemini AI**
+**Made with ❤️ by [Aayush Jain](https://github.com/aayushjain-code)**
