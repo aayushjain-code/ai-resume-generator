@@ -32,7 +32,7 @@ const DescriptionSection = ({ register, errors }: DescriptionSectionProps) => {
           })}
           rows={6}
           className="input-field resize-none"
-          placeholder="Enter a detailed description of the job, role, or position you&apos;re applying for. Include key responsibilities, requirements, and any specific details that would help generate a targeted resume..."
+          placeholder="Enter a detailed description of the job, role, or position you're applying for. Include key responsibilities, requirements, and any specific details that would help generate a targeted resume..."
         />
         <div className="flex justify-between items-center mt-1">
           {errors.description && (
@@ -49,4 +49,3 @@ const DescriptionSection = ({ register, errors }: DescriptionSectionProps) => {
 };
 
 export default DescriptionSection;
-

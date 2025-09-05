@@ -21,11 +21,6 @@ const SkillsSection = ({ register, errors }: SkillsSectionProps) => {
         </label>
         <textarea
           {...register("skills", {
-            required: "Skills are required",
-            minLength: {
-              value: 30,
-              message: "Please provide at least 30 characters",
-            },
             maxLength: {
               value: 800,
               message: "Skills must be less than 800 characters",

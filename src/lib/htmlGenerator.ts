@@ -1,6 +1,9 @@
 import { ResumeData } from "@/types";
 
-export const generateHtml = (resumeContent: string, resumeData: ResumeData): string => {
+export const generateHtml = (
+  resumeContent: string,
+  resumeData: ResumeData
+): string => {
   try {
     // Parse the resume content into structured sections
     const sections = parseResumeContent(resumeContent);
@@ -12,7 +15,10 @@ export const generateHtml = (resumeContent: string, resumeData: ResumeData): str
   }
 };
 
-const generateHtmlForPreview = (sections: Record<string, string>, resumeData: ResumeData) => {
+const generateHtmlForPreview = (
+  sections: Record<string, string>,
+  resumeData: ResumeData
+) => {
   return `
 <!DOCTYPE html>
 <html lang="en">
@@ -383,4 +389,3 @@ const parseSkillsContent = (skillsContent: string) => {
 
   return skills;
 };
-

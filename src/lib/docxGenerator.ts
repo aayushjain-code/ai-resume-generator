@@ -12,7 +12,10 @@ import {
 
 import { ResumeData } from "@/types";
 
-export const generateDocx = async (resumeContent: string, resumeData: ResumeData): Promise<ArrayBuffer> => {
+export const generateDocx = async (
+  resumeContent: string,
+  resumeData: ResumeData
+): Promise<ArrayBuffer> => {
   try {
     // Parse the resume content into structured sections
     const sections = parseResumeContent(resumeContent);
@@ -47,7 +50,10 @@ export const generateDocx = async (resumeContent: string, resumeData: ResumeData
 
     // Generate buffer
     const buffer = await Packer.toBuffer(doc);
-    return buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength) as ArrayBuffer;
+    return buffer.buffer.slice(
+      buffer.byteOffset,
+      buffer.byteOffset + buffer.byteLength
+    ) as ArrayBuffer;
   } catch (error: unknown) {
     console.error("Error generating DOCX:", error);
     throw new Error(`Failed to generate DOCX: ${error}`);
@@ -272,4 +278,3 @@ const parseSkillsContent = (skillsContent: string) => {
 
   return skills;
 };
-

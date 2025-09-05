@@ -5,7 +5,7 @@ export interface FormData {
     name: string;
     email?: string;
     jobTitle: string;
-    yearsOfExperience: string;
+    yearsOfExperience: number;
     domain?: string;
     education?: string;
   };
@@ -21,7 +21,7 @@ export interface FormSectionProps {
 }
 
 export interface ResumeData extends FormData {
-  exportFormat: 'docx' | 'html';
+  exportFormat: "docx" | "html";
 }
 
 export interface PersonalInfo {

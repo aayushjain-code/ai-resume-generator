@@ -35,8 +35,8 @@ const ResumeForm = ({
       setIsGenerating(true);
       onGeneratingChange(true);
 
-      if (!data.description || !data.workResponsibilities || !data.skills) {
-        toast.error("Please fill in all required fields");
+      if (!data.description) {
+        toast.error("Please provide a job description");
         return;
       }
 
@@ -87,8 +87,8 @@ const ResumeForm = ({
       setIsGenerating(true);
       onGeneratingChange(true);
 
-      if (!data.description || !data.workResponsibilities || !data.skills) {
-        toast.error("Please fill in all required fields");
+      if (!data.description) {
+        toast.error("Please provide a job description");
         return;
       }
 

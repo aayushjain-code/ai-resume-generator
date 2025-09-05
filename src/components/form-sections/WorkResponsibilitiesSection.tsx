@@ -23,11 +23,6 @@ const WorkResponsibilitiesSection = ({
         </label>
         <textarea
           {...register("workResponsibilities", {
-            required: "Work responsibilities are required",
-            minLength: {
-              value: 50,
-              message: "Please provide at least 50 characters",
-            },
             maxLength: {
               value: 1000,
               message: "Responsibilities must be less than 1000 characters",

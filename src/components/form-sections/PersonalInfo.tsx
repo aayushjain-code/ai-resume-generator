@@ -94,24 +94,27 @@ const PersonalInfo = ({ register, errors }: PersonalInfoProps) => {
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Years of Experience *
+            Years of Experience
           </label>
           <div className="relative">
             <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-            <select
+            <input
+              type="number"
               {...register("personalInfo.yearsOfExperience", {
-                required: "Years of experience is required",
+                min: {
+                  value: 0,
+                  message: "Years of experience must be 0 or greater",
+                },
+                max: {
+                  value: 50,
+                  message: "Years of experience must be less than 50",
+                },
               })}
               className="input-field pl-10"
-            >
-              <option value="">Select experience</option>
-              <option value="0-1">0-1 years</option>
-              <option value="2-3">2-3 years</option>
-              <option value="4-5">4-5 years</option>
-              <option value="6-8">6-8 years</option>
-              <option value="9-12">9-12 years</option>
-              <option value="13+">13+ years</option>
-            </select>
+              placeholder="5"
+              min="0"
+              max="50"
+            />
           </div>
           {errors.personalInfo?.yearsOfExperience && (
             <p className="mt-1 text-sm text-red-600">
