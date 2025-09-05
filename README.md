@@ -188,3 +188,6 @@ If you have any questions or need help:
 ---
 
 **Made with ❤️ by [Aayush Jain](https://github.com/aayushjain-code)**
+
+---
+*Last updated: January 2025*
