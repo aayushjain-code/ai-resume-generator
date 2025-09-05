@@ -1,11 +1,12 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import OpenAI from "openai";
 import { generateDocx } from "./docxGenerator";
 import { generateHtml } from "./htmlGenerator";
 
-// Initialize Gemini AI
-const genAI = new GoogleGenerativeAI(
-  process.env.NEXT_PUBLIC_GEMINI_API_KEY || ""
-);
+// Initialize OpenAI
+const openai = new OpenAI({
+  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY || "",
+  dangerouslyAllowBrowser: true, // Only for client-side usage
+});
 
 const RESUME_SYSTEM_PROMPT = `You are an expert resume writer. Generate a professional, ATS-friendly resume based on the following inputs:
 
@@ -35,8 +36,7 @@ export const generateResume = async (
   resumeData: ResumeData
 ): Promise<ArrayBuffer> => {
   try {
-    // Get the Gemini Pro model
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+    // Generate content using OpenAI
 
     // Prepare the prompt with resume data
     const prompt = `${RESUME_SYSTEM_PROMPT}
@@ -47,8 +47,10 @@ CANDIDATE DETAILS:
       resumeData.personalInfo?.jobTitle || "Software Engineer"
     }
 - Years of Experience: ${
-       resumeData.personalInfo?.yearsOfExperience ? `${resumeData.personalInfo.yearsOfExperience} years` : "3-5 years"
-     }
+      resumeData.personalInfo?.yearsOfExperience
+        ? `${resumeData.personalInfo.yearsOfExperience} years`
+        : "3-5 years"
+    }
 - Domain / Industry Focus: ${resumeData.personalInfo?.domain || "Technology"}
 - Education: ${
       resumeData.personalInfo?.education || "Bachelor's in Computer Science"
@@ -75,22 +77,35 @@ Email: ${resumeData.personalInfo?.email || "Not provided"}
 
 Please generate a professional resume following the structure and guidelines above. Create realistic and professional content that matches the job description requirements. Include a Job Code at the bottom in the format: Job Code: [ROLE-INITIALS-NAME-YYYY]`;
 
-    // Generate content using Gemini
-    let result;
-    let response;
+    // Generate content using OpenAI
     let resumeContent;
-
+    
     try {
-      result = await model.generateContent(prompt);
-      response = await result.response;
-      resumeContent = response.text();
+      const completion = await openai.chat.completions.create({
+        model: "gpt-4o-mini",
+        messages: [
+          {
+            role: "system",
+            content: RESUME_SYSTEM_PROMPT
+          },
+          {
+            role: "user",
+            content: prompt
+          }
+        ],
+        max_tokens: 2000,
+        temperature: 0.7,
+      });
+
+      resumeContent = completion.choices[0]?.message?.content || "";
     } catch (apiError: unknown) {
       // Check if it's a quota error and handle it immediately
       if (
         apiError instanceof Error &&
         (apiError.message.includes("429") ||
           apiError.message.includes("quota") ||
-          apiError.message.includes("QuotaFailure"))
+          apiError.message.includes("rate_limit") ||
+          apiError.message.includes("insufficient_quota"))
       ) {
         console.log("API quota exceeded, generating fallback resume...");
         const fallbackContent = generateFallbackResume(resumeData);
@@ -129,6 +144,8 @@ Please generate a professional resume following the structure and guidelines abo
       error instanceof Error &&
       (error.message.includes("429") ||
         error.message.includes("quota") ||
+        error.message.includes("rate_limit") ||
+        error.message.includes("insufficient_quota") ||
         error.message.includes("QuotaFailure"))
     ) {
       console.log("API quota exceeded, generating fallback resume...");
@@ -150,10 +167,11 @@ Please generate a professional resume following the structure and guidelines abo
     if (
       error instanceof Error &&
       (error.message.includes("API_KEY") ||
-        error.message.includes("authentication"))
+        error.message.includes("authentication") ||
+        error.message.includes("invalid_api_key"))
     ) {
       throw new Error(
-        "Invalid API key. Please check your Gemini API key configuration."
+        "Invalid API key. Please check your OpenAI API key configuration."
       );
     }
 
@@ -169,7 +187,7 @@ const generateFallbackResume = (resumeData: ResumeData) => {
   const name = resumeData.personalInfo?.name || "John Doe";
   const email = resumeData.personalInfo?.email || "john.doe@email.com";
   const jobTitle = resumeData.personalInfo?.jobTitle || "Software Engineer";
-  const yearsOfExperience = resumeData.personalInfo?.yearsOfExperience 
+  const yearsOfExperience = resumeData.personalInfo?.yearsOfExperience
     ? `${resumeData.personalInfo.yearsOfExperience} years`
     : "3-5 years";
   const domain = resumeData.personalInfo?.domain || "Technology";

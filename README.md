@@ -16,7 +16,7 @@ A powerful, AI-driven resume generator built with Next.js 15, TypeScript, and Ta
 - **Professional Formatting**: ATS-friendly structure with clear sections
 
 ### 🤖 **AI-Powered Content**
-- **Google Gemini AI Integration**: Generate personalized resume content
+- **OpenAI GPT-4 Integration**: Generate personalized resume content
 - **Smart Fallback System**: Professional templates when API quota is exceeded
 - **Job Code Generation**: Unique tracking codes in format `[ROLE-INITIALS-NAME-YYYY]`
 - **Context-Aware**: Extracts relevant technologies from job descriptions
@@ -37,7 +37,7 @@ A powerful, AI-driven resume generator built with Next.js 15, TypeScript, and Ta
 ### Prerequisites
 - Node.js 18+ 
 - npm or yarn
-- Google Gemini API key (optional, fallback available)
+- OpenAI API key (optional, fallback available)
 
 ### Installation
 
@@ -57,9 +57,9 @@ A powerful, AI-driven resume generator built with Next.js 15, TypeScript, and Ta
    cp .env.example .env.local
    ```
    
-   Add your Gemini API key to `.env.local`:
+   Add your OpenAI API key to `.env.local`:
    ```env
-   NEXT_PUBLIC_GEMINI_API_KEY=your_gemini_api_key_here
+   NEXT_PUBLIC_OPENAI_API_KEY=your_openai_api_key_here
    ```
 
 4. **Run the development server**
@@ -99,7 +99,7 @@ A powerful, AI-driven resume generator built with Next.js 15, TypeScript, and Ta
 - **Lucide React** - Beautiful icons
 
 ### Backend & AI
-- **Google Generative AI** - Gemini 1.5 Pro for content generation
+- **OpenAI** - GPT-4o-mini for content generation
 - **DOCX Generation** - Professional Word document creation
 - **Puppeteer** - PDF generation capabilities
 
@@ -136,7 +136,7 @@ src/
 
 ### Environment Variables
 ```env
-NEXT_PUBLIC_GEMINI_API_KEY=your_gemini_api_key_here
+NEXT_PUBLIC_OPENAI_API_KEY=your_openai_api_key_here
 ```
 
 ### Tailwind Configuration
@@ -172,7 +172,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- **Google Gemini AI** for powerful content generation
+- **OpenAI** for powerful content generation
 - **Next.js Team** for the amazing React framework
 - **Tailwind CSS** for the utility-first CSS framework
 - **Vercel** for seamless deployment platform
