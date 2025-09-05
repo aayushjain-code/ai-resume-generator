@@ -1,10 +1,8 @@
 import React from "react";
 import { StickyNote } from "lucide-react";
+import { FormSectionProps } from "@/types";
 
-interface AdditionalNotesSectionProps {
-  register: any;
-  errors: any;
-}
+interface AdditionalNotesSectionProps extends FormSectionProps {}
 
 const AdditionalNotesSection = ({
   register,

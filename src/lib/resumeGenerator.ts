@@ -29,7 +29,9 @@ FORMATTING GUIDELINES:
 OUTPUT FORMAT:
 Return the resume content in clean, structured text format that can be easily converted to DOCX. Use clear section headers and maintain professional formatting.`;
 
-export const generateResume = async (resumeData: any) => {
+import { ResumeData } from "@/types";
+
+export const generateResume = async (resumeData: ResumeData) => {
   try {
     // Get the Gemini Pro model
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
@@ -80,7 +82,7 @@ Please generate a professional resume following the structure and guidelines abo
       result = await model.generateContent(prompt);
       response = await result.response;
       resumeContent = response.text();
-    } catch (apiError: any) {
+    } catch (apiError: unknown) {
       // Check if it's a quota error and handle it immediately
       if (
         apiError.message.includes("429") ||
@@ -113,7 +115,7 @@ Please generate a professional resume following the structure and guidelines abo
       default:
         return await generateDocx(resumeContent, resumeData);
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error in resume generation:", error);
 
     // Check if it's a quota error
@@ -149,7 +151,7 @@ Please generate a professional resume following the structure and guidelines abo
   }
 };
 
-const generateFallbackResume = (resumeData: any) => {
+const generateFallbackResume = (resumeData: ResumeData) => {
   const name = resumeData.personalInfo?.name || "John Doe";
   const email = resumeData.personalInfo?.email || "john.doe@email.com";
   const jobTitle = resumeData.personalInfo?.jobTitle || "Software Engineer";
@@ -201,52 +203,4 @@ Job Code: ${jobCode}
 Note: This resume was generated using fallback content due to API quota limitations. For a more personalized resume, please try again later or upgrade your API plan.`;
 };
 
-const extractTechKeywords = (description: string): string[] => {
-  const commonTechs = [
-    "React",
-    "Vue",
-    "Angular",
-    "JavaScript",
-    "TypeScript",
-    "Python",
-    "Java",
-    "C++",
-    "C#",
-    "Node.js",
-    "Express",
-    "Django",
-    "Flask",
-    "Spring",
-    "Laravel",
-    "Ruby on Rails",
-    "AWS",
-    "Azure",
-    "Google Cloud",
-    "Docker",
-    "Kubernetes",
-    "Jenkins",
-    "GitLab",
-    "PostgreSQL",
-    "MySQL",
-    "MongoDB",
-    "Redis",
-    "Elasticsearch",
-    "HTML",
-    "CSS",
-    "SASS",
-    "LESS",
-    "Tailwind",
-    "Bootstrap",
-    "REST API",
-    "GraphQL",
-    "Microservices",
-    "Agile",
-    "Scrum",
-  ];
-
-  const foundTechs = commonTechs.filter((tech) =>
-    description.toLowerCase().includes(tech.toLowerCase())
-  );
-
-  return foundTechs.slice(0, 8); // Limit to 8 most relevant technologies
-};
+// Removed unused function

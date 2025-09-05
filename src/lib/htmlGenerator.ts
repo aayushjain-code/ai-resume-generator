@@ -1,16 +1,18 @@
-export const generateHtml = (resumeContent: string, resumeData: any) => {
+import { ResumeData } from "@/types";
+
+export const generateHtml = (resumeContent: string, resumeData: ResumeData) => {
   try {
     // Parse the resume content into structured sections
     const sections = parseResumeContent(resumeContent);
 
     return generateHtmlForPreview(sections, resumeData);
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error generating HTML:", error);
     throw new Error(`Failed to generate HTML: ${error}`);
   }
 };
 
-const generateHtmlForPreview = (sections: any, resumeData: any) => {
+const generateHtmlForPreview = (sections: Record<string, string>, resumeData: ResumeData) => {
   return `
 <!DOCTYPE html>
 <html lang="en">

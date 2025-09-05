@@ -1,10 +1,8 @@
 import React from "react";
 import { User, Mail, Briefcase, GraduationCap, Calendar } from "lucide-react";
+import { FormSectionProps } from "@/types";
 
-interface PersonalInfoProps {
-  register: any;
-  errors: any;
-}
+interface PersonalInfoProps extends FormSectionProps {}
 
 const PersonalInfo = ({ register, errors }: PersonalInfoProps) => {
   return (

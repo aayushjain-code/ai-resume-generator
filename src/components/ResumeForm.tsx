@@ -10,21 +10,7 @@ import SkillsSection from "./form-sections/SkillsSection";
 import AdditionalNotesSection from "./form-sections/AdditionalNotesSection";
 import { Download, Loader2, Eye } from "lucide-react";
 import { generateResume } from "@/lib/resumeGenerator";
-
-interface FormData {
-  personalInfo: {
-    name: string;
-    email?: string;
-    jobTitle: string;
-    yearsOfExperience: string;
-    domain?: string;
-    education?: string;
-  };
-  description: string;
-  workResponsibilities: string;
-  skills: string;
-  additionalNotes?: string;
-}
+import { FormData, ResumeData } from "@/types";
 
 const ResumeForm = ({
   onGeneratingChange,
@@ -54,9 +40,9 @@ const ResumeForm = ({
         return;
       }
 
-      const resumeData = {
+      const resumeData: ResumeData = {
         ...data,
-        exportFormat: "docx" as const,
+        exportFormat: "docx",
       };
 
       const result = await generateResume(resumeData);
@@ -74,15 +60,19 @@ const ResumeForm = ({
 
       setFileName(filename);
       toast.success("Resume generated successfully!");
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error generating resume:", error);
 
-      if (error.message.includes("quota") || error.message.includes("429")) {
-        toast.success(
-          "Resume generated using fallback content (API quota exceeded)"
-        );
-      } else if (error.message.includes("API key")) {
-        toast.error("Invalid API key. Please check your configuration.");
+      if (error instanceof Error) {
+        if (error.message.includes("quota") || error.message.includes("429")) {
+          toast.success(
+            "Resume generated using fallback content (API quota exceeded)"
+          );
+        } else if (error.message.includes("API key")) {
+          toast.error("Invalid API key. Please check your configuration.");
+        } else {
+          toast.error("Failed to generate resume");
+        }
       } else {
         toast.error("Failed to generate resume");
       }
@@ -102,24 +92,28 @@ const ResumeForm = ({
         return;
       }
 
-      const resumeData = {
+      const resumeData: ResumeData = {
         ...data,
-        exportFormat: "html" as const,
+        exportFormat: "html",
       };
 
       const result = await generateResume(resumeData);
       setPreviewHtml(result);
       setShowPreview(true);
       toast.success("Preview generated successfully!");
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error generating preview:", error);
 
-      if (error.message.includes("quota") || error.message.includes("429")) {
-        toast.success(
-          "Preview generated using fallback content (API quota exceeded)"
-        );
-      } else if (error.message.includes("API key")) {
-        toast.error("Invalid API key. Please check your configuration.");
+      if (error instanceof Error) {
+        if (error.message.includes("quota") || error.message.includes("429")) {
+          toast.success(
+            "Preview generated using fallback content (API quota exceeded)"
+          );
+        } else if (error.message.includes("API key")) {
+          toast.error("Invalid API key. Please check your configuration.");
+        } else {
+          toast.error("Failed to generate preview");
+        }
       } else {
         toast.error("Failed to generate preview");
       }

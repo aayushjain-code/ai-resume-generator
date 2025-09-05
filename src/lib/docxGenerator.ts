@@ -10,7 +10,9 @@ import {
   WidthType,
 } from "docx";
 
-export const generateDocx = async (resumeContent: string, resumeData: any) => {
+import { ResumeData } from "@/types";
+
+export const generateDocx = async (resumeContent: string, resumeData: ResumeData) => {
   try {
     // Parse the resume content into structured sections
     const sections = parseResumeContent(resumeContent);
@@ -46,13 +48,13 @@ export const generateDocx = async (resumeContent: string, resumeData: any) => {
     // Generate buffer
     const buffer = await Packer.toBuffer(doc);
     return buffer;
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error generating DOCX:", error);
     throw new Error(`Failed to generate DOCX: ${error}`);
   }
 };
 
-const createHeader = (personalInfo: any) => {
+const createHeader = (personalInfo: ResumeData["personalInfo"]) => {
   const elements = [];
 
   if (personalInfo?.name) {
